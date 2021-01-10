@@ -27,6 +27,8 @@ import java.util.Set;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
+import org.checkerframework.checker.determinism.qual.Det;
+
 /**
  * <p>
  * Assists in implementing {@link Object#hashCode()} methods.
@@ -188,7 +190,7 @@ public class HashCodeBuilder implements Builder<Integer> {
         }
         try {
             register(object);
-            final Field[] fields = clazz.getDeclaredFields();
+            final @Det Field @Det[] fields = clazz.getDeclaredFields();
             AccessibleObject.setAccessible(fields, true);
             for (final Field field : fields) {
                 if (!ArrayUtils.contains(excludeFields, field.getName())

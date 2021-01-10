@@ -28,6 +28,8 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 
+import org.checkerframework.checker.determinism.qual.Det;
+
 /**
  * <p>
  * Assists in implementing {@link Object#toString()} methods using reflection.
@@ -538,7 +540,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
             this.reflectionAppendArray(this.getObject());
             return;
         }
-        final Field[] fields = clazz.getDeclaredFields();
+        final @Det Field @Det[] fields = clazz.getDeclaredFields();
         AccessibleObject.setAccessible(fields, true);
         for (final Field field : fields) {
             final String fieldName = field.getName();

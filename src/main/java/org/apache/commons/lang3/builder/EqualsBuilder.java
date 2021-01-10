@@ -26,6 +26,8 @@ import java.util.Set;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+import org.checkerframework.checker.determinism.qual.Det;
+
 /**
  * <p>Assists in implementing {@link Object#equals(Object)} methods.</p>
  *
@@ -414,7 +416,7 @@ public class EqualsBuilder implements Builder<Boolean> {
 
         try {
             register(lhs, rhs);
-            final Field[] fields = clazz.getDeclaredFields();
+            final @Det Field @Det[] fields = clazz.getDeclaredFields();
             AccessibleObject.setAccessible(fields, true);
             for (int i = 0; i < fields.length && builder.isEquals; i++) {
                 final Field f = fields[i];

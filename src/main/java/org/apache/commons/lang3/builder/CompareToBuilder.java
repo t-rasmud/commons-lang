@@ -24,6 +24,8 @@ import java.util.Comparator;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import org.checkerframework.checker.determinism.qual.Det;
+
 /** 
  * Assists in implementing {@link java.lang.Comparable#compareTo(Object)} methods.
  *
@@ -317,7 +319,7 @@ public class CompareToBuilder implements Builder<Integer> {
         final boolean useTransients,
         final String[] excludeFields) {
         
-        final Field[] fields = clazz.getDeclaredFields();
+        final @Det Field @Det[] fields = clazz.getDeclaredFields();
         AccessibleObject.setAccessible(fields, true);
         for (int i = 0; i < fields.length && builder.comparison == 0; i++) {
             final Field f = fields[i];

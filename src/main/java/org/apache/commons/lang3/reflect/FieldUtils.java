@@ -26,6 +26,8 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.checkerframework.checker.determinism.qual.Det;
+
 /**
  * Utilities for working with {@link Field}s by reflection. Adapted and refactored from the dormant [reflect] Commons
  * sandbox component.
@@ -195,7 +197,7 @@ public class FieldUtils {
      * @since 3.2
      */
     public static Field[] getAllFields(final Class<?> cls) {
-        final List<Field> allFieldsList = getAllFieldsList(cls);
+        final @Det List<@Det Field> allFieldsList = getAllFieldsList(cls);
         return allFieldsList.toArray(new Field[allFieldsList.size()]);
     }
 
@@ -211,10 +213,10 @@ public class FieldUtils {
      */
     public static List<Field> getAllFieldsList(final Class<?> cls) {
         Validate.isTrue(cls != null, "The class must not be null");
-        final List<Field> allFields = new ArrayList<Field>();
+        final @Det List<@Det Field> allFields = new ArrayList<Field>();
         Class<?> currentClass = cls;
         while (currentClass != null) {
-            final Field[] declaredFields = currentClass.getDeclaredFields();
+            final @Det Field @Det[] declaredFields = currentClass.getDeclaredFields();
             for (final Field field : declaredFields) {
                 allFields.add(field);
             }
@@ -235,7 +237,7 @@ public class FieldUtils {
      * @since 3.4
      */
     public static Field[] getFieldsWithAnnotation(final Class<?> cls, final Class<? extends Annotation> annotationCls) {
-        final List<Field> annotatedFieldsList = getFieldsListWithAnnotation(cls, annotationCls);
+        final @Det List<@Det Field> annotatedFieldsList = getFieldsListWithAnnotation(cls, annotationCls);
         return annotatedFieldsList.toArray(new Field[annotatedFieldsList.size()]);
     }
 
